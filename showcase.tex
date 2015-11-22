@@ -1,0 +1,40 @@
+%
+% Showcase file to demonstrate the abilities of kLabCourse-template.
+% 
+% 
+
+\documentclass[ngerman]{kLCReprt}
+
+\usepackage{blindtext}
+\usepackage{kLCTitle}
+\reportAuthor[Zweiter Autor]{Erster Autor}
+\reportAuthorMail[zweite.mail@mail.org]{email@mail.org}
+\reportDate{25.02.2015}
+\reportSubmissionDate{06.03.2015}
+\reportExperiment{Nummer 14}
+\reportTitle{Titel des Experiments}
+\reportSupervisor{Mein Supervisor}
+
+\bibliography{bib/bibliography.bib}
+
+
+\begin{document}
+\maketitle\thispagestyle{empty}
+\cleardoublepage
+\tableofcontents\thispagestyle{plain}
+\cleardoublepage
+
+\include{tex/levels}
+\include{tex/maths}
+\include{tex/misc}
+\include{tex/font}
+
+\appendix
+\section{Grafiken und Tabellen}
+\cleardoublepage
+
+\printbibliography
+
+\end{document}
+
+% End of file

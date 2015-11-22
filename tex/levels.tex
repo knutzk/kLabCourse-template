@@ -1,0 +1,37 @@
+% Section with some text and heading and list levels
+
+
+% \let\chapter\section
+% \let\section\subsection
+% \let\subsection\subsubsection
+
+\makeatletter
+% \chapter{\blindtext@heading 0 (Chapter)}
+% \Blindtext
+\section{\blindtext@heading 1 (section)}
+\Blindtext
+\subsection{\blindtext@heading 2 (subsection)}
+\Blindtext
+\subsubsection{\blindtext@heading 3 (subsubsection)}
+\Blindtext
+\paragraph{\blindtext@heading 4 (paragraph)}
+\Blindtext
+\section{\blindtext@list}%
+\subsection{\blindtext@listEx (itemize)}%
+\Blinditemize[3]
+\subsection{\blindtext@listEx (4*itemize)}%
+% \blind@longtrue
+\blindlistlist{itemize}[2]%
+\subsection{\blindtext@listEx (enumerate)}%
+\Blindenumerate[3]
+\subsection{\blindtext@listEx (4*enumerate)}%
+% \blind@longtrue
+\blindlistlist{enumerate}[2]%
+\makeatother
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../diss"
+%%% End:

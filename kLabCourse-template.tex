@@ -1,0 +1,107 @@
+%
+% Hauptdatei zum Schreiben des Protokolls. Dieses Dokument benutzt die LaTeX-
+% Klasse kLCReprt und das LaTeX-Paket kLCTitle des Pakets kLabCourse-template.
+% 
+% 
+
+
+% Moegliche Optionen fuer die Klasse sind:
+%   - ALLE Optionen, die auch KOMA Skript zur Verfuegung stellt
+%   - lightdraft: zum Setzen eines Vermerkes fuer vorlaeufige Versionen
+%   - debug: zum Deaktivieren aller Klassen-Features
+%   - hyperref=true/false: zum (De-)Aktivieren von hyperref
+%   - microtype=true/false: zum (De-)Aktivieren von microtype
+%   - web/print: zum Aktivieren/Deaktivieren von farbigen Links
+\documentclass[%
+               % draft,%                % vorlaeufige Version (alle Features)
+               % lightdraft,%           % Vorlaeufige Version (Vermerk)
+               ngerman,%                % Sprache festlegen: ngerman, english
+               % (zusaetzl. Optionen)
+               ]{kLCReprt}
+
+
+
+%  M E T A E I N S T E L L U N G E N 
+% ==========================================================
+
+% Falls weitere Pakete gewuenscht, hier einbinden mit:
+% \usepackage{paketname}
+%
+% Bereits eingebundene Pakete: 
+%   - etoolbox, ifthen, kvoptions, xstring (fuer Klasseneinstellungen)
+%   - amsmath   (Mathe-Paket)
+%   - babel     (Sprachunterstuetzung fuer Silbentrennung etc.)
+%   - booktabs  (Vernuenftige horizontale Linien in Tabellen)
+%   - csquotes  (Anfuehrungszeichen entsprechend der voreingestellten Sprache)
+%   - enumitem  (Manipulation von enumerate-/itemize-Umgebungen)
+%   - float     (Platzierung von Floats mit [!H] forcieren)
+%   - fontenc   (Schrift-Encodierung ist T1, unterstuetzt Umlaute)
+%   - graphicx  (Grafik-Einbindung)
+%   - hyperref  (fuer verlinkte Hyperlinks)
+%   - inputenc  (encoding des Dokumentes ist UTF8)
+%   - multirow  (Multi-Row-Support fuer Tabellen)
+%   - rotating  (Floats sind rotierbar (bspw. fuer breite Tabellen)
+%   - setspace  (Zeilenabstand manipulierbar)
+%   - todonotes (To-Do-Notes koennen in Text eingebaut werden)
+%   - units     (Korrektes Setzen der physik. Einheiten)
+%   - wrapfig   (Floats koennen von Text umflossen werden)
+%   - xcolor    (Unterstuetzung fuer benutzerdefinierte Farben)
+%   - xspace    (Selbstdefinierte Befehle "fressen" keine Leerzeichen)
+
+
+% kLCTitle-Paket zur Erstellung der Titelseite. Optionen sind:
+%   - bewertet: Titelseite angepasst fuer bewertete Protokolle
+%   - prakt=bachelor: Einstellungen fuer Bachelor-Praktikum (voreingestellt)
+%   - prakt=master: Einstellungen fuer Master-Praktikum
+%   - coverpage=true/false: aktiviert Coverpage-Features des zugrundeliegenden
+%     KOMA-Skript-Pakets
+% \usepackage[bewertet]{kLCTitle}
+\usepackage{kLCTitle}
+
+
+% Hier Einstellungen fuer die Titelseite festlegen.
+\reportAuthor[Zweiter Autor]{Erster Autor}
+\reportAuthorMail[zweite.mail@mail.org]{email@mail.org}
+\reportDate{25.02.2015}
+\reportSubmissionDate{06.03.2015}
+\reportExperiment{Nummer 14}
+\reportTitle{Titel des Experiments}
+\reportSupervisor{Mein Supervisor}
+
+% Hier die Bibliographie-Datei angeben.
+\bibliography{bib/bibliography.bib}
+
+\usepackage{blindtext}
+
+
+%  B E G I N N   D E S   D O K U M E N T S
+% ==========================================================
+\begin{document}
+
+% Die folgenden Befehle erstellen die Titelseite und das Inhaltsverzeichnis.
+% Der Befehl \cleardoublepage sorgt jeweils dafuer, dass der nachfolgende In-
+% halt auf einer rechten Seite startet. Falls das nicht gewuenscht ist, koennen
+% die Befehle durch ein einfaches \clearpage ersetzt werden.
+\maketitle\thispagestyle{empty}
+\cleardoublepage
+\tableofcontents\thispagestyle{plain}
+\cleardoublepage
+
+
+% Hier faengt der eigentliche Text an.
+
+
+% Hier fangen die Anhaenge an.
+\appendix
+\section{Grafiken und Tabellen}
+\cleardoublepage
+
+
+% Hier wird das Literaturverzeichnis, dass sich ueber die im Text genutzten
+% Zitationen ergibt, ausgegeben.
+\printbibliography
+
+\end{document}
+
+
+% End of file

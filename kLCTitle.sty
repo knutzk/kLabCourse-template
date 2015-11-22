@@ -1,0 +1,306 @@
+%
+%   kLCTitle is a LaTeX package for lab course title pages and is part of the 
+%   kLabCourse-template package.
+%
+%   kLabCourse-template has particularly been designed for the lab courses of
+%   the Faculty of Physics (the "Faculty"), University of Goettingen, Germany.
+%   Be aware that the template was neither created on authority of the Faculty
+%   nor has it been approved by it.
+%
+%
+%   Copyright 2015 Knut Zoch (knut DOT zoch AT gmail DOT com)
+%
+%   Licensed under the Apache License, Version 2.0 (the "License");
+%   you may not use this file except in compliance with the License.
+%   You may obtain a copy of the License at
+%
+%       http://www.apache.org/licenses/LICENSE-2.0
+%
+%   Unless required by applicable law or agreed to in writing, software
+%   distributed under the License is distributed on an "AS IS" BASIS,
+%   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%   See the License for the specific language governing permissions and
+%   limitations under the License.
+%
+%
+%   Version history:
+%   ==================
+%   2015/11/22: version 0.1
+%
+%
+%   Detailed description:
+%   =======================
+%   To come ...
+%
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{kLCTitle}[2015/11/22 v0.1 LaTeX package for lab course title pages^^J
+\@spaces\@spaces\@spaces\space\space\space (particularly for the Faculty of Physics, University of Goettingen)^^J
+\@spaces\@spaces\@spaces\space\space\space Copyright (C) 2015 Knut Zoch^^J]
+% maximum error width:   52
+% maximum warning width: 56
+\newcommand{\kLCTitle@error}[2]{\PackageError{kLCTitle}{#1}{#2}}
+\newcommand{\kLCTitle@warning}[1]{\PackageWarning{kLCTitle}{#1}}
+
+\RequirePackage{calc}
+\RequirePackage{etoolbox}
+\RequirePackage{ifthen}
+\RequirePackage{kvoptions}
+\RequirePackage{letterspace}
+\RequirePackage{xcolor}
+\RequirePackage{xstring}
+
+\DeclareBoolOption[false]{bewertet}
+\DeclareBoolOption[true]{coverpage}
+\DeclareStringOption[bachelor]{prakt}
+
+\ProcessKeyvalOptions*
+
+
+
+% Check whether a KOMA class has been loaded. Otherwise, load KOMA package
+% scrextend which gives the basic features to design this titlepage.
+\@ifundefined{KOMAClassName}{%
+  \PassOptionsToPackage{extendedfeature=title}{scrextend}
+  \RequirePackage{scrextend}
+  \relax
+}{}
+
+% Set KOMA option for cover page and adjust margins.
+\ifthenelse{\boolean{kLCTitle@coverpage}}{%
+  \KOMAoptions{titlepage=firstiscover}
+  \renewcommand{\coverpagebottommargin}{1in}
+  \renewcommand{\coverpagetopmargin}{1in}
+  \renewcommand{\coverpageleftmargin}{1in}
+  \renewcommand{\coverpagerightmargin}{1in}
+}{
+  \kLCTitle@warning{%
+    Option "coverpage" is deactivated. To make full use\MessageBreak
+    of the functionality of the kLCTitle package,\MessageBreak
+    activate the "coverpage" option}
+}
+
+% Define error messages for missing commands.
+\def\kLCTitle@Author{\kLCTitle@error{%
+    Author not set. Please set the author by using the\MessageBreak
+    \noexpand\reportAuthor command}{}}
+\ifthenelse{\boolean{kLCTitle@bewertet}}{%
+  \def\kLCTitle@AuthorTwo{\kLCTitle@error{%
+      Second Author not set. Please set the second author\MessageBreak
+      by using the \noexpand\reportAuthor command.}{}}
+}{}
+\def\kLCTitle@AuthorMail{\kLCTitle@error{%
+    Author's email not set. Please set the author's\MessageBreak
+    email by using the \noexpand\reportAuthorMail command}{}}
+\def\kLCTitle@Exp{\kLCTitle@error{%
+    Experiment (number) not set. Please set the\MessageBreak
+    experiment by using the \noexpand\reportExperiment command}{}}
+\def\kLCTitle@LabDate{\kLCTitle@error{%
+    Implementation date not set. Please set the date\MessageBreak
+    of implementation by using the \noexpand\reportDate command}{}}
+\def\kLCTitle@Referee{\kLCTitle@error{%
+    Referee not set. Please set the referee by using the\MessageBreak
+    \noexpand\reportReferee command}{}}
+\ifdefstring{\kLCTitle@prakt}{master}{%
+  \def\kLCTitle@SubDate{\kLCTitle@warning{%
+      Submission date not set. The submission date can be set\MessageBreak
+      by using the \noexpand\reportSubDate command.\MessageBreak}}
+}{%
+  \def\kLCTitle@SubDate{\kLCTitle@error{%
+      Submission date not set. Please set the submission\MessageBreak
+      date by using the \noexpand\reportSubDate command}{}}
+}  
+\def\kLCTitle@Supervisor{\kLCTitle@error{%
+    Supervisor not set. Please set the supervisor by\MessageBreak
+    using the \noexpand\reportSupervisor command}{}}
+\def\kLCTitle@Title{\kLCTitle@error{%
+    Title of the document not set. Please set the\MessageBreak
+    document title by using the \noexpand\reportTitle command}{}}
+
+% Define commands to be set by the author.
+\newcommand{\reportAuthor}[2][]{\def\kLCTitle@Author{#2}\def\kLCTitle@AuthorTwo{#1}}
+\newcommand{\reportAuthorMail}[2][%
+  (2nd Author's email)\kReport@warning{2nd author's email not set.}]{%
+  \def\kLCTitle@AuthorMail{#2}\def\kLCTitle@AuthorMailTwo{#1}}
+\newcommand{\reportDate}{\def\kLCTitle@LabDate}
+\newcommand{\reportSubmissionDate}{\def\kLCTitle@SubDate}
+\newcommand{\reportExperiment}{\def\kLCTitle@Exp}
+\newcommand{\reportTitle}{\def\kLCTitle@Title}
+\newcommand{\reportSupervisor}{\def\kLCTitle@Supervisor}
+\newcommand{\reportReferee}{\def\kLCTitle@Referee}
+
+
+% Set title head, subject, and title of titlepage.
+\IfEqCase*{\kLCTitle@prakt}{%
+  {bachelor}{%
+    \titlehead{%
+      \vspace*{1\baselineskip minus 1\baselineskip}
+      \large\scshape
+      \centering
+      \textls[150]{Anfängerpraktikum der Fakultät für Physik} \\
+      \textls[150]{Universität Göttingen} \\
+    }%
+
+    \title{%
+      \vspace*{2\baselineskip minus 2\baselineskip}
+      % \vspace*{0pt minus 0.5\baselineskip}
+      \centering
+      \normalfont\Huge\bfseries\color{black}
+      \rule{\textwidth}{0.5pt}\\[0.5\baselineskip]
+      Versuch \kLCTitle@Exp\\
+      \kLCTitle@Title\\
+      \rule{\textwidth}{0.5pt}
+    }
+  }% end of bachelor
+  {master}{%
+    % Check if option "bewertet" was given and issue warning.
+    \ifthenelse{\boolean{kLCTitle@bewertet}}{%
+      \kLCTitle@warning{%
+        Option "bewertet" is set although the used lab course\MessageBreak
+        type does not support that. The option "bewertet" will\MessageBreak
+        be ignored.}
+    }{}
+
+    \titlehead{%
+      \vspace*{1\baselineskip minus 1\baselineskip}
+      \Large\bfseries
+      \centering
+      Master Forschungspraktikum \\
+      Fakultät für Physik, Universität Göttingen \\
+      \rule{\textwidth}{0.5pt}
+    }%
+
+    \subject{%
+      \vspace*{0pt minus 0.5\baselineskip}
+      \Huge\bfseries
+      \centering
+      Ausarbeitung \\
+      zum Versuch \kLCTitle@Exp
+    }
+    
+    \title{%
+      \normalfont\normalsize
+      \vspace*{0pt minus 1\baselineskip}
+      \Huge\color{black}
+      \kLCTitle@Title
+    }
+  }% end of master
+}[% What if unknown lab course type is entered?
+\kLCTitle@error{%
+  Unknown lab course type: prakt=\kLCTitle@prakt. Possible\MessageBreak
+  options are "prakt=bachelor" and "prakt=master"}{}]
+
+
+% Use empty date and author fields.
+\date{}
+\author{}
+
+
+% Set publishers (miscellaneous info).
+\publishers{%
+  \normalsize\raggedright
+  \renewcommand{\arraystretch}{1.5}
+  \renewcommand{\tabcolsep}{0pt}
+
+  \newlength{\kLCTitle@halflength}
+  \setlength{\kLCTitle@halflength}{0.49\textwidth}
+
+  % Set the correct separation length between columns by measuring the
+  % word length (+ 2em).
+  \newlength{\kLCTitle@lskiplength}
+  \let\kLCTitle@lskip\empty
+
+
+  % Now check which type of lab report this is.
+  \IfEqCase*{\kLCTitle@prakt}{%
+    {bachelor}{%
+      \vspace*{5\baselineskip minus 7\baselineskip}
+
+      \setlength{\kLCTitle@lskiplength}{%
+        \kLCTitle@halflength-2em-\widthof{Datum der Durchführung:}}
+      \renewcommand{\kLCTitle@lskip}{\hspace*{\kLCTitle@lskiplength}}
+
+      \begin{center}
+        \begin{tabular}{p{\kLCTitle@halflength}p{\kLCTitle@halflength}}
+          \ifthenelse{\boolean{kLCTitle@bewertet}}{%
+            \kLCTitle@lskip Praktikant:       & \kLCTitle@Author       \\
+            \kLCTitle@lskip E-Mail:           & \kLCTitle@AuthorMail   \\
+            \kLCTitle@lskip Mitarbeiter:      & \kLCTitle@AuthorTwo    \\
+          }{%
+            \ifdefstring{\kLCTitle@AuthorTwo}{}{%
+              \kLCTitle@lskip Praktikant:     & \kLCTitle@Author       \\
+              \kLCTitle@lskip E-Mail:         & \kLCTitle@AuthorMail   \\
+            }{%
+              \kLCTitle@lskip Praktikanten:   & \kLCTitle@Author       \\
+                                            & \kLCTitle@AuthorTwo    \\
+              \kLCTitle@lskip E-Mail:         & \kLCTitle@AuthorMail   \\
+                                            & \kLCTitle@AuthorMailTwo\\
+            }
+          }
+          \kLCTitle@lskip Betreuer(in):       & \kLCTitle@Supervisor   \\
+          \kLCTitle@lskip Datum der Durchführung: & \kLCTitle@LabDate  \\
+          \kLCTitle@lskip Datum der Abgabe:   & \kLCTitle@SubDate      \\
+        \end{tabular}
+
+        \vspace*{3\baselineskip minus 2\baselineskip}
+
+        \fbox{%
+          \begin{minipage}[t][4em][t]{12em}
+            \ifthenelse{\boolean{kLCTitle@bewertet}}{%
+              eingegangen:
+            }{%
+              Testat:
+            }
+          \end{minipage}
+        }
+      \end{center}
+      
+      \vspace*{2\baselineskip minus 2\baselineskip}
+    }% end of bachelor
+    {master}{%
+      \vspace*{0pt minus 2\baselineskip}
+
+      \setlength{\kLCTitle@lskiplength}{%
+        \kLCTitle@halflength-2em-\widthof{Datum Versuchsdurchführung:}}
+      \renewcommand{\kLCTitle@lskip}{\hspace*{\kLCTitle@lskiplength}}
+
+      \begin{center}
+        \begin{tabular}{p{\kLCTitle@halflength}p{\kLCTitle@halflength}}
+          \kLCTitle@lskip Name:               & \kLCTitle@Author       \\
+          \kLCTitle@lskip E-Mail:             & \kLCTitle@AuthorMail   \\
+          \kLCTitle@lskip Datum Versuchsdurchführung: & \kLCTitle@LabDate \\
+          \kLCTitle@lskip Name Betreuer(in):  & \kLCTitle@Supervisor   \\
+          \kLCTitle@lskip Unterschrift:       & \\
+        \end{tabular}
+      \end{center}
+
+      \vspace*{1\baselineskip minus 1\baselineskip}
+
+      \begin{center}
+        \Large\bfseries
+        Abgabe
+      \end{center}
+
+      \begin{tabular}{p{\kLCTitle@halflength}p{\kLCTitle@halflength}}
+        \kLCTitle@lskip Datum:~~\kLCTitle@SubDate  & Unterschrift Betreuer(in):
+      \end{tabular}
+
+      \vspace*{1\baselineskip minus 1\baselineskip}
+
+      \begin{center}
+        \Large\bfseries
+        Testat
+      \end{center}
+
+      \begin{tabular}{p{\kLCTitle@halflength}p{\kLCTitle@halflength}}
+        \kLCTitle@lskip Datum:       & Name Prüfer(in):~~ \kLCTitle@Referee \\
+        \kLCTitle@lskip Punktezahl:  & Unterschrift:
+      \end{tabular}
+    }% end of master
+  }
+}
+\endinput
+
+
+% End of file
