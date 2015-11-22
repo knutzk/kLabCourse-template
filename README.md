@@ -1,7 +1,6 @@
 # kLabCourse-template
 
-kLCTitle is a LaTeX package for lab course title pages and is part of the 
-kLabCourse-template package.
+kLabCourse-template is a LaTeX package for lab course reports.
 
 kLabCourse-template has particularly been designed for the lab courses of
 the Faculty of Physics (the "Faculty"), University of Goettingen, Germany.
